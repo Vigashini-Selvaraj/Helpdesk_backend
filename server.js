@@ -15,7 +15,7 @@ const app = express();
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:5173',
-    'https://transcendent-macaron-5d5066.netlify.app',
+    'https://tracklyyhespdesk.netlify.app',
     process.env.FRONTEND_URL // Optional: add this as env var in Render
 ];
 
