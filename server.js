@@ -11,7 +11,26 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+// CORS - Allow requests from your frontend
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'https://transcendent-macaron-5d5066.netlify.app',
+    process.env.FRONTEND_URL // Optional: add this as env var in Render
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true
+}));
 app.use(express.json());
 
 // Database connection
