@@ -59,10 +59,10 @@ router.get("/all", async (req, res) => {
 // UPDATE Status (Admin)
 router.put("/:id/status", async (req, res) => {
     try {
-        const { status } = req.body;
+        const { status, resolutionNote, adminFeedback } = req.body;
         const complaint = await Complaint.findByIdAndUpdate(
             req.params.id,
-            { status },
+            { status, resolutionNote, adminFeedback },
             { new: true }
         );
 

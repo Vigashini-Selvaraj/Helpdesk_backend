@@ -29,6 +29,14 @@ const ComplaintSchema = new mongoose.Schema({
         default: "Medium",
         enum: ["Low", "Medium", "High", "Critical"],
     },
+    resolutionNote: {
+        type: String,
+        default: "",
+    },
+    adminFeedback: {
+        type: String,
+        default: "",
+    },
 }, { timestamps: true });
 
 export default mongoose.model("Complaint", ComplaintSchema);

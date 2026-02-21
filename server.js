@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import complaintRoutes from "./routes/complaintRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import reminderRoutes from "./routes/reminderRoutes.js";
 
 dotenv.config();
 
@@ -23,7 +24,14 @@ app.use(cors({
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
+
+        // Allow any localhost origin
+        if (origin.startsWith('http://localhost:')) {
+            return callback(null, true);
+        }
+
         if (allowedOrigins.indexOf(origin) === -1) {
+            console.log("Blocked by CORS:", origin); // Log the origin that is being blocked
             const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
             return callback(new Error(msg), false);
         }
@@ -40,6 +48,7 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/complaints", complaintRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/reminders", reminderRoutes);
 
 // Test route
 app.get("/", (req, res) => {
